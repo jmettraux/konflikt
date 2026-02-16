@@ -55,24 +55,31 @@ let explosion = function() {
 
   const r4 = r / 4;
 
-  let point = function() { return cylinder(2 * h, 0.01, 0.01, csegs, true); };
+  let point = function(x=0.01) {
+    return cylinder(2 * h, x, x, csegs, true); };
+  //let peg = function() {
+  //  return cube([ 0.6, 0.6, 2 * h ], true).rotate([ 0, 0, 45 ]); };
 
   let pa = point().translate([ -r4, -2.1 * r4, 0 ]);
   let pb = point().translate([  r4, -2.1 * r4, 0 ]);
 
   let p1 = point().translate([ -2.4 * r4, 0.5 * r4, 0 ]);
-  let p2 = point().translate([ -r4, 2.5 * r4, 0 ]);
-  let p3 = point().translate([  r4, 2 * r4, 0 ]);
-  let p4 = point().translate([ 2 * r4, 1 * r4, 0 ]);
+  let p2 = point().translate([ -r4, 2.2 * r4, 0 ]);
+  let p3 = point().translate([  r4, 1.7 * r4, 0 ]);
+  let p4 = point().translate([ 2 * r4, 0.9 * r4, 0 ]);
   let p5 = point().translate([ 2.4 * r4, -0.5 * r4, 0 ]);
+
+  //let p91 = peg().translate([  1.9 * r4, -2.1 * r4, 0 ]);
+  //let p92 = peg().translate([ -1.9 * r4, -2.1 * r4, 0 ]);
 
   return union(
     hull(pa, pb, p1),
     hull(pa, pb, p2),
     hull(pa, pb, p3),
     hull(pa, pb, p4),
-    hull(pa, pb, p5)
-      );
+    hull(pa, pb, p5),
+    //hull(p91, p92)
+      ).translate([ 0, 1, 0 ]);
 };
 
 //
