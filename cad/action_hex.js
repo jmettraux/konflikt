@@ -57,9 +57,14 @@ let box =
   cube([ dice_side, dice_side, dice_side ], true)
     .translate([ 0, 0, 2 + 0.5 * dice_side ]);
 
+//let hex1 = hull(
+//  hex(),
+//  hex().translate([ 0, 0, 0.56 * dice_side ]));
 let hex1 = hull(
   hex(),
-  hex().translate([ 0, 0, 0.56 * dice_side ]));
+  sphe().translate([ 0, 0, 3.1 * h ]),
+  sphe().translate([ 0, t - rr, 2.1 * h ]),
+    );
 
 export default hex1.subtract(box);
 
