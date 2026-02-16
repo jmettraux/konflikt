@@ -3,7 +3,7 @@
 // action_hex.js
 //
 
-import { Manifold, show } from 'manifold-3d/manifoldCAD';
+import { Manifold, show, only } from 'manifold-3d/manifoldCAD';
 const { cylinder, cube, sphere, hull, union } = Manifold;
 
 const csegs = 12;
@@ -57,14 +57,22 @@ let box =
   cube([ dice_side, dice_side, dice_side ], true)
     .translate([ 0, 0, 2 + 0.5 * dice_side ]);
 
-//let hex1 = hull(
-//  hex(),
-//  hex().translate([ 0, 0, 0.56 * dice_side ]));
+//
+// hull
+
 let hex1 = hull(
   hex(),
   sphe().translate([ 0, 0, 3.1 * h ]),
   sphe().translate([ 0, t - rr, 2.1 * h ]),
     );
 
-export default hex1.subtract(box);
+let balcyls = []; for (let a = 30; a < 360; a = a + 60) {
+  balcyls.push(
+    balcyl().translate([ 0, r - br - 4 * o2, 0 ]).rotate([ 0, 0, a ]));
+}
+
+//
+// that's all folks
+
+export default hex1.subtract(box).subtract(union(balcyls));
 
