@@ -40,12 +40,13 @@ let hex = function() {
     balls.push(
       sphe().translate([ 0, t - rr, -h2 ]).rotate([ 0, 0, a ]));
   }
-  balcyls.push(balcyl());
-  for (let a = 30; a < 360; a = a + 60) {
-    balcyls.push(
-      balcyl().translate([ 0, r - br - 4 * o2, 0 ]).rotate([ 0, 0, a ]));
-  }
-  return hull(balls).subtract(union(balcyls));
+  //balcyls.push(balcyl());
+  //for (let a = 30; a < 360; a = a + 60) {
+  //  balcyls.push(
+  //    balcyl().translate([ 0, r - br - 4 * o2, 0 ]).rotate([ 0, 0, a ]));
+  //}
+  //return hull(balls).subtract(union(balcyls));
+  return hull(balls);
 };
 
 //
@@ -66,7 +67,7 @@ let hex1 = hull(
   sphe().translate([ 0, t - rr, 2.1 * h ]),
     );
 
-let balcyls = []; for (let a = 30; a < 360; a = a + 60) {
+let balcyls = [ balcyl() ]; for (let a = 30; a < 360; a = a + 60) {
   balcyls.push(
     balcyl().translate([ 0, r - br - 4 * o2, 0 ]).rotate([ 0, 0, a ]));
 }
