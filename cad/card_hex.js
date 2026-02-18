@@ -55,10 +55,8 @@ let hex = function() {
 let card_side = 35;
 
 let card =
-  show(
-    cube([ 0.4, card_side, card_side ], true)
-      .translate([ 0, 0, 2 + -0.5 * h + 0.5 * card_side ])
-        );
+  cube([ 0.4, card_side, card_side ], true)
+    .translate([ 0, 0, 2 + -0.5 * h + 0.5 * card_side ]);
 
 //
 // hull
