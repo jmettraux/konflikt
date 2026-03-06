@@ -28,10 +28,25 @@ let template = function(diameter=4) {
 
   let cir = cylinder(height, r1, r1, csegs, true);
 
-  let ray0 = cube([ thickness, 0.5 * inch, height ], true)
-    .translate([ 0, r0 - 0.25 * inch, 0 ]);
-  let ray = cube([ thickness, inch, height ], true)
-    .translate([ 0, r0 - 0.5 * inch, 0 ]);
+  let rl =
+    diameter > 3 ? inch :
+    diameter > 2 ? 0.5 * inch :
+    0.25 * inch;
+  let rl0 =
+    0.5 * rl;
+
+  let ray0 = cube([ thickness, rl0, height ], true)
+  ray0 = ray0.translate([ 0, r0 - 0.5 * rl0, 0 ]);
+
+  let ray = cube([ thickness, rl, height ], true)
+  ray = ray.translate([ 0, r0 - 0.5 * rl, 0 ]);
+
+  if (diameter <= 1) {
+    ray0 = ray0.translate([ 0, 2.2 * rl0, 0 ]);
+    ray = ray.translate([ 0, 1.5 * rl, 0 ]);
+  }
+  //ray0 = show(ray0);
+  //ray = show(ray);
 
   cir = cir.subtract(cylinder(1.1 * height, r0, r0, csegs, true));
   cir = cir.add(ray0);
