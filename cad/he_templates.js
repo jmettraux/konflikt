@@ -8,39 +8,6 @@ const { cylinder, cube, sphere, hull, union } = Manifold;
 
 const csegs = 36;
 
-// manowar.js
-// 2b7a2fb321a4557b3613c9581958c5a5910bc46a
-// Sun Nov  2 18:53:23 JST 2025
-var Manowar = (function() {
-  "use strict";
-  let self = this;
-  let slicedCylinder = function(
-    height, radiusLo, radiusHi, angle, circularSegments, center
-  ) {
-    let h1 = 1.5 * height;
-    let rr = Math.max(radiusLo, radiusHi) + 0.2;
-    let cyl = Manifold.cylinder(
-      height, radiusLo, radiusHi, circularSegments, center);
-    let cub = Manifold.cube([ rr, rr, h1 ], true)
-      .translate([ rr / 2, rr / 2, 0 ]);
-    let qua = Manifold.intersection(cyl, cub);
-    let sli = angle % 90;
-    let ang = angle - sli;
-    let pieces = [];
-    let a = 0;
-    for (; a < ang; a += 90) {
-      pieces.push(qua.rotate([ 0, 0, a ]));
-    }
-    if (sli > 0) {
-      let slc = qua.subtract(cub.rotate([ 0, 0, sli ]));
-      pieces.push(slc.rotate([ 0, 0, a ]));
-    }
-    return Manifold.union(pieces);
-  };
-  this.slicedCylinder = slicedCylinder;
-  return this;
-}).apply({}); // end Manowar
-
 // unit is mm
 
 const inch = 25.4;
@@ -56,31 +23,25 @@ const thickness = 5;
 
 let template = function(diameter=4) {
 
-  let r1 = 0.5 * diameter * inch + thickness;
-  let r0 = 0.5 * (diameter - 1) * inch + thickness;
+  let r0 = 0.5 * diameter * inch;
+  let r1 = r0 + thickness;
 
-  let sc1 = Manowar.slicedCylinder(height, r1, r1, 90, csegs, true);
-  let sc0 = Manowar.slicedCylinder(height, r0, r0, 90, csegs, true);
+  let cir = cylinder(height, r1, r1, csegs, true);
 
-  let ir0 = r0 - thickness;
-  let ic0 = cylinder(1.1 * height, ir0, ir0, csegs, true);
+  let ray0 = cube([ thickness, 0.5 * inch, height ], true)
+    .translate([ 0, r0 - 0.25 * inch, 0 ]);
+  let ray = cube([ thickness, inch, height ], true)
+    .translate([ 0, r0 - 0.5 * inch, 0 ]);
 
-  let ir1 =
-    r1 - thickness;
-  let ic1 =
-    Manowar.slicedCylinder(1.1 * height, ir1, ir1, 80, csegs, true)
-      .rotate([ 0, 0, 5 ]);
+  cir = cir.subtract(cylinder(1.1 * height, r0, r0, csegs, true));
+  cir = cir.add(ray0);
+  cir = cir.add(ray.rotate([ 0, 0,  45 ]));
+  cir = cir.add(ray.rotate([ 0, 0, -45 ]));
+  cir = cir.add(ray.rotate([ 0, 0,  45 + 180 ]));
+  cir = cir.add(ray.rotate([ 0, 0, -45 - 180 ]));
 
-  return union(
-    sc1,
-    sc1.rotate([ 0, 0, 180 ]),
-    sc0.rotate([ 0, 0, 90 ]),
-    sc0.rotate([ 0, 0, 180 + 90 ]))
-      .subtract(ic0)
-      .subtract(ic1)
-      .subtract(ic1.rotate([ 0, 0, 180 ]));
+  return cir;
 };
-
 
 export default template(4);
 
