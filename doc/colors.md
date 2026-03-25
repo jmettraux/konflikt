@@ -5,8 +5,6 @@
 * Demigod Flame = 1p Cadmium Yellow + 1p Cadmium Orange
 * Artic Gem = 2p Phthalo Blue + 1p Phthalo Green + Titanium White until icy
 
-* Gun Metal = 3p Black + 1p White + 0.1p Ultramarine Blue
-
 * Gun Metal 2 = 2p Ivory Black + 1p Titanium White
   - Add tiny touch Burnt Umber (warms/neutralizes)
   - Add tiny touch Ultramarine or Prussian Blue (gives the cold steel feel)
