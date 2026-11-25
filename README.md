@@ -3,6 +3,8 @@
 
 Tools for [Konflikt'47](https://www.konflikt47.com/rift/)
 
+Leverages [https://manifoldcad.org/](https://manifoldcad.org/)
+
 
 ## license
 
